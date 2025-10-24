@@ -16,6 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -37,8 +38,10 @@ enum class MainDestinations(
 }
 
 @Composable
-fun MainScreen(modifier: Modifier = Modifier) {
-    val navController = rememberNavController()
+fun MainScreen(
+    modifier: Modifier = Modifier,
+    navController: NavHostController = rememberNavController()
+) {
     var selectedTab by remember { mutableStateOf(MainDestinations.PHOTO_LIST) }
 
     Scaffold(
@@ -49,6 +52,7 @@ fun MainScreen(modifier: Modifier = Modifier) {
                     NavigationBarItem(
                         selected = destination == selectedTab,
                         onClick = {
+                            navController.navigateToDestination(destination)
                             selectedTab = destination
                         },
                         icon = {
@@ -79,3 +83,9 @@ fun MainScreen(modifier: Modifier = Modifier) {
         }
     }
 }
+
+private fun NavHostController.navigateToDestination(destination: MainDestinations) =
+    this.navigate(destination.route) {
+        launchSingleTop = true
+        restoreState = true
+    }
