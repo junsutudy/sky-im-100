@@ -1,4 +1,4 @@
-package app.junsu.imback.features.main.tabs.library
+package app.junsu.imback.core.features.main.tabs.library
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
