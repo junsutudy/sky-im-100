@@ -1,4 +1,4 @@
-package app.junsu.imback.features.main.tabs.library
+package app.junsu.imback.features.main.tabs.photo_list
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -8,14 +8,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun LibraryTab(modifier: Modifier = Modifier) {
+fun PhotoListTab(modifier: Modifier = Modifier) {
     Scaffold(
         modifier = modifier,
     ) { paddingValues ->
         Column(
             modifier = Modifier.padding(paddingValues)
         ) {
-            Text("AND WELCOME TO LIBRARY TAB")
+            Text("PHOTO LIST SCREEN")
         }
     }
 }

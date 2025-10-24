@@ -28,10 +28,10 @@ enum class ImBackDestinations(
     val route: String,
 ) {
     MAIN(
-        route = "main",
+        route = "/main",
     ),
     PHOTO_DETAILS(
-        route = "photo_details",
+        route = "/photo_details",
     ),
 }
 
