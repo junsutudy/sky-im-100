@@ -1,21 +1,28 @@
 package app.junsu.imback.data.photo
 
 import app.junsu.imback.data.photo.model.Photo
-import app.junsu.imback.datasource.photo.PhotoDatabaseDataSource
-import app.junsu.imback.datasource.photo.PhotoNetworkDataSource
+import app.junsu.imback.datasource.photo.database.PhotoDatabaseDataSource
+import app.junsu.imback.datasource.photo.network.PhotoNetworkDataSource
 import javax.inject.Inject
 
-class PhotoRepository @Inject constructor(
+abstract class PhotoRepository {
+    abstract suspend fun getPhotos(
+        page: Int?,
+        limit: Int?,
+    ): List<Photo>
+}
+
+class PhotoRepositoryImpl @Inject constructor(
     private val photoNetworkDataSource: PhotoNetworkDataSource,
     private val photoDatabaseDataSource: PhotoDatabaseDataSource,
-) {
-    suspend fun getPhotoList(
-        page: Int = 0,
-        limit: Int = PHOTOS_FETCH_LIMIT,
+) : PhotoRepository() {
+    override suspend fun getPhotos(
+        page: Int?,
+        limit: Int?,
     ): List<Photo> {
         val fetchedPhotos = photoNetworkDataSource.fetchPhotos(
-            page = page,
-            limit = limit,
+            page = page ?: 0,
+            limit = limit ?: PHOTOS_FETCH_LIMIT,
         )
         return fetchedPhotos.map { response ->
             Photo(
