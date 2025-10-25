@@ -9,8 +9,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import app.junsu.imback.core.features.main.MainScreen
-import app.junsu.imback.ui.theme.IMBACKTheme
+import app.junsu.imback.features.main.MainScreen
+import app.junsu.imback.core.ui.theme.IMBACKTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

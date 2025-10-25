@@ -1,4 +1,4 @@
-package app.junsu.imback.core.features.main
+package app.junsu.imback.features.main
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -20,8 +20,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import app.junsu.imback.core.features.main.tabs.library.LibraryTab
-import app.junsu.imback.core.features.main.tabs.photo_list.PhotoListTab
+import app.junsu.imback.features.main.tabs.library.LibraryTab
+import app.junsu.imback.features.main.tabs.photo_list.PhotoListTab
 
 enum class MainDestinations(
     val route: String,

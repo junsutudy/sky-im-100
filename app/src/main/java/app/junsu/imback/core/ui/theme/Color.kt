@@ -1,4 +1,4 @@
-package app.junsu.imback.ui.theme
+package app.junsu.imback.core.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
