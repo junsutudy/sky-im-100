@@ -1,4 +1,7 @@
 package app.junsu.imback.datasource.photo.database
 
-class PhotoDatabaseDataSource {
-}
+import javax.inject.Inject
+
+abstract class PhotoDatabaseDataSource
+
+class PhotoDatabaseDataSourceImpl @Inject constructor() : PhotoDatabaseDataSource()
