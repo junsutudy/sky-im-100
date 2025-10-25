@@ -34,7 +34,7 @@ enum class MainDestinations(
     LIBRARY(
         route = "/library",
         icon = Icons.Default.Email
-    ), ;
+    ),
 }
 
 @Composable
