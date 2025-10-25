@@ -22,13 +22,3 @@ data class PhotoDetailsResponse(
     @SerializedName("url") val url: String,
     @SerializedName("download_url") val downloadUrl: String,
 )
-
-data class PhotoRecommendation(
-    val type: Type,
-    val photoId: String,
-) {
-    enum class Type {
-        RECENT_VIEWED, RECENT_FROM_BOOKMARKS, EXCITED, POPULAR,
-        ;
-    }
-}
