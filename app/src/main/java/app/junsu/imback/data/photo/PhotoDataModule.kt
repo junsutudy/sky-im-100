@@ -7,8 +7,8 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class PhotoModule {
+abstract class PhotoDataModule {
 
     @Binds
-    abstract fun bindPhotoRepository(): PhotoRepository
+    abstract fun bindPhotoRepository(impl: PhotoRepositoryImpl): PhotoRepository
 }
