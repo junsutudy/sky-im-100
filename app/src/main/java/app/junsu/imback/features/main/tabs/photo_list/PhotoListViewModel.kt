@@ -23,7 +23,7 @@ class PhotoListViewModel @Inject constructor(
     init {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val fetchedPhotos = photoRepository.getPhotos(page = 0, limit = 50)
+                val fetchedPhotos = photoRepository.getPhotos(page = 0, limit = 25)
                 _uiState.emit(uiState.value.copy(photos = fetchedPhotos))
             } catch (_: Exception) {
             }
