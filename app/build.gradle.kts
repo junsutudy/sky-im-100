@@ -21,6 +21,9 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+
+        // BASE_URL_PROD="https://picsum.photos"
+        // BASE_URL_DEBUG="https://picsum.photos"
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -31,8 +34,7 @@ android {
             buildConfigField(
                 type = "String",
                 name = "BASE_URL",
-                /* value = gradleLocalProperties(rootDir).getProperty("BASE_URL_PROD") */
-                value = "\"https://picsum.photos\"",
+                value = localProperty("BASE_URL_PROD")
             )
         }
 
@@ -40,8 +42,7 @@ android {
             buildConfigField(
                 type = "String",
                 name = "BASE_URL",
-                /* value = gradleLocalProperties(rootDir).getProperty("BASE_URL_DEBUG") */
-                value = "\"https://picsum.photos\"",
+                value = localProperty("BASE_URL_DEBUG")
             )
         }
     }
@@ -100,3 +101,8 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 }
+fun localProperty(key: String): String =
+    com.android.build.gradle.internal.cxx.configure.gradleLocalProperties(
+        rootDir,
+        providers,
+    ).getProperty(key)
