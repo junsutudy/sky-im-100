@@ -9,7 +9,6 @@ plugins {
 android {
     namespace = "app.junsu.imback"
     compileSdk = 35
-    android.buildFeatures.buildConfig = true
 
     defaultConfig {
         applicationId = "app.junsu.imback"
@@ -55,6 +54,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
