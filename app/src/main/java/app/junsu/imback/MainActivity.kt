@@ -11,6 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import app.junsu.imback.core.ui.theme.IMBACKTheme
 import app.junsu.imback.features.main.MainScreen
+import app.junsu.imback.features.photo_details.PhotoDetailsScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -43,9 +44,15 @@ fun ImBackApp(modifier: Modifier = Modifier) {
     NavHost(
         navController = navController,
         startDestination = ImBackDestinations.MAIN.route,
+        modifier = modifier,
     ) {
         composable(ImBackDestinations.MAIN.route) {
             MainScreen()
+        }
+        composable(ImBackDestinations.PHOTO_DETAILS.route) {
+            PhotoDetailsScreen(
+                onNavigateUp = navController::navigateUp,
+            )
         }
     }
 }

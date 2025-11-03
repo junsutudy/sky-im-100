@@ -48,7 +48,7 @@ fun PhotoViewer(
                     scaleY = maxOf(.5f, minOf(3f, scale)),
                 ),
                 model = details.downloadUrl,
-                contentDescription = details.id,
+                contentDescription = null,
                 contentScale = ContentScale.FillWidth,
                 alignment = Alignment.Center,
             )
