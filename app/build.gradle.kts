@@ -85,6 +85,10 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
 
+    val orbit = "10.0.0"
+    implementation("org.orbit-mvi:orbit-compose:$orbit")
+    implementation("org.orbit-mvi:orbit-viewmodel:$orbit")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
