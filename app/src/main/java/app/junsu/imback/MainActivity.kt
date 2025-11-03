@@ -6,9 +6,11 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import app.junsu.imback.core.ui.theme.IMBACKTheme
 import app.junsu.imback.features.main.MainScreen
 import app.junsu.imback.features.photo_details.PhotoDetailsScreen
@@ -49,8 +51,18 @@ fun ImBackApp(modifier: Modifier = Modifier) {
         composable(ImBackDestinations.MAIN.route) {
             MainScreen()
         }
-        composable(ImBackDestinations.PHOTO_DETAILS.route) {
+        composable(
+            route = ImBackDestinations.PHOTO_DETAILS.route + "/{photoId}",
+            arguments = listOf(
+                navArgument("photoId") {
+                    type = NavType.LongType
+                    nullable = false
+                },
+            )
+        ) {
+            val photoId = it.arguments?.getLong("photoId")!!
             PhotoDetailsScreen(
+                photoId = photoId,
                 onNavigateUp = navController::navigateUp,
             )
         }

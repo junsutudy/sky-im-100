@@ -13,6 +13,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -22,6 +23,7 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PhotoDetailsScreen(
+    photoId: Long,
     onNavigateUp: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: PhotoDetailsViewModel = hiltViewModel(),
@@ -32,6 +34,10 @@ fun PhotoDetailsScreen(
         when (it) {
             PhotoDetailsSideEffect.Loading -> println("PHOTO DETAILS LOADING ENTERED")
         }
+    }
+
+    LaunchedEffect(key1 = photoId) {
+        viewModel.loadPhotoDetails(photoId = photoId)
     }
 
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
