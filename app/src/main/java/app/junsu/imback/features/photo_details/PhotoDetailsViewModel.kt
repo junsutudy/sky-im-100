@@ -25,7 +25,11 @@ class PhotoDetailsViewModel @Inject constructor(
         container<PhotoDetailsState, PhotoDetailsSideEffect>(PhotoDetailsState())
 
     init {
-         intent {
-         }
+        intent {
+            val photoDetails = photoRepository.getPhotoDetails(id = photoId)
+            reduce {
+                state.copy(photoDetails = photoDetails)
+            }
+        }
     }
 }
