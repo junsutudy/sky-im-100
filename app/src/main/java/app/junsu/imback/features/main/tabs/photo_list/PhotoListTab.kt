@@ -42,6 +42,7 @@ import app.junsu.imback.core.ui.composables.PhotoCell
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PhotoListTab(
+    onOpenPhotoDetails: (photoId: Long) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: PhotoListViewModel = hiltViewModel(),
 ) {
@@ -121,7 +122,7 @@ fun PhotoListTab(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .aspectRatio(1.0f),
-                            onClick = {},
+                            onClick = { onOpenPhotoDetails.invoke(photo.id) },
                         )
                     }
                 }

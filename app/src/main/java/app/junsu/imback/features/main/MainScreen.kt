@@ -79,7 +79,9 @@ fun MainScreen(
                 .consumeWindowInsets(paddingValues),
         ) {
             composable(MainDestinations.PHOTO_LIST.route) {
-                PhotoListTab()
+                PhotoListTab(
+                    onOpenPhotoDetails = onOpenPhotoDetails,
+                )
             }
             composable(MainDestinations.LIBRARY.route) {
                 LibraryTab()
