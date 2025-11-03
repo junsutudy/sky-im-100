@@ -1,7 +1,7 @@
 package app.junsu.imback.core.ui.composables
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -15,17 +15,14 @@ fun PhotoCell(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
 ) {
-    Box(
+    AsyncImage(
+        model = "${BuildConfig.BASE_URL}/id/${photo.id}/256/256",
+        contentDescription = null,
         modifier = modifier
             .clickable(
                 onClick = onClick,
-            ),
-    ) {
-        println("${BuildConfig.BASE_URL}/200")
-        AsyncImage(
-            model = "${BuildConfig.BASE_URL}/200",
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-        )
-    }
+            )
+            .fillMaxSize(),
+        contentScale = ContentScale.Crop,
+    )
 }

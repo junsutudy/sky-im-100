@@ -39,8 +39,7 @@ fun PhotoListTab(
                             photo = photo,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .aspectRatio(1.0f)
-                                .background(color = Color.Blue),
+                                .aspectRatio(1.0f),
                         ) {
 
                         }
