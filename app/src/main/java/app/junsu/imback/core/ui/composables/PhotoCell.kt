@@ -16,7 +16,7 @@ fun PhotoCell(
     onClick: () -> Unit,
 ) {
     AsyncImage(
-        model = "${BuildConfig.BASE_URL}/id/${photo.id}/256/256",
+        model = "${BuildConfig.BASE_URL}/id/${photo.id}/128/128",
         contentDescription = null,
         modifier = modifier
             .clickable(
