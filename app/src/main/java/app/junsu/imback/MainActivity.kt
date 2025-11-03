@@ -4,6 +4,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavType
@@ -47,6 +51,22 @@ fun ImBackApp(modifier: Modifier = Modifier) {
         navController = navController,
         startDestination = ImBackDestinations.MAIN.route,
         modifier = modifier,
+        enterTransition = {
+            fadeIn(
+                animationSpec = tween(
+                    easing = FastOutSlowInEasing,
+                    durationMillis = 250,
+                ),
+            )
+        },
+        exitTransition = {
+            fadeOut(
+                animationSpec = tween(
+                    easing = FastOutSlowInEasing,
+                    durationMillis = 250,
+                ),
+            )
+        }
     ) {
         composable(ImBackDestinations.MAIN.route) {
             MainScreen(
