@@ -1,6 +1,6 @@
 package app.junsu.imback.datasource.photo.network
 
-import app.junsu.imback.data.photo.PhotoRepositoryImpl.Companion.PHOTOS_FETCH_LIMIT
+import app.junsu.imback.data.photo.repository.PhotoRepositoryImpl.Companion.PHOTOS_FETCH_LIMIT
 import app.junsu.imback.datasource.photo.model.PhotoDetailsResponse
 import app.junsu.imback.datasource.photo.model.PhotoResponse
 import app.junsu.imback.datasource.photo.network.api_service.PhotoApiService

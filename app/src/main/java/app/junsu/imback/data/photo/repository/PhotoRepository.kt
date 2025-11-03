@@ -1,4 +1,4 @@
-package app.junsu.imback.data.photo
+package app.junsu.imback.data.photo.repository
 
 import app.junsu.imback.data.photo.model.Photo
 import app.junsu.imback.data.photo.model.PhotoDetails

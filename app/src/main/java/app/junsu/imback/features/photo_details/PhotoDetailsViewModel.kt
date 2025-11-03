@@ -1,7 +1,7 @@
 package app.junsu.imback.features.photo_details
 
 import androidx.lifecycle.ViewModel
-import app.junsu.imback.data.photo.PhotoRepository
+import app.junsu.imback.data.photo.repository.PhotoRepository
 import app.junsu.imback.data.photo.model.PhotoDetails
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.ContainerHost

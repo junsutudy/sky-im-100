@@ -1,7 +1,7 @@
 package app.junsu.imback.features.main.tabs.photo_list
 
 import androidx.lifecycle.ViewModel
-import app.junsu.imback.data.photo.PhotoRepository
+import app.junsu.imback.data.photo.repository.PhotoRepository
 import app.junsu.imback.data.photo.model.Photo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
