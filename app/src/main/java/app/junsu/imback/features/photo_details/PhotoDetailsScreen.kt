@@ -18,7 +18,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import coil.compose.AsyncImage
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -77,9 +79,14 @@ fun PhotoDetailsScreen(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center,
         ) {
-            PhotoViewer(
-                photoDetails = state.photoDetails,
-            )
+            PhotoViewer {
+                AsyncImage(
+                    model = state.photoDetails?.downloadUrl,
+                    contentDescription = null,
+                    contentScale = ContentScale.FillWidth,
+                    alignment = Alignment.Center,
+                )
+            }
         }
     }
 }
