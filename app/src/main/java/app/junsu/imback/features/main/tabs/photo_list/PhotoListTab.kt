@@ -1,6 +1,5 @@
 package app.junsu.imback.features.main.tabs.photo_list
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.exclude
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,7 +12,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ScaffoldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.junsu.imback.core.ui.composables.PhotoCell
@@ -34,7 +32,7 @@ fun PhotoListTab(
         ) {
             state.value.photos.let { photos ->
                 if (photos.isNotEmpty()) {
-                    items(photos) { photo ->
+                    items(photos, key = { photo -> photo.id }) { photo ->
                         PhotoCell(
                             photo = photo,
                             modifier = Modifier
