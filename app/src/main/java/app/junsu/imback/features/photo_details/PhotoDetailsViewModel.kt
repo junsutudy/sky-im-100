@@ -18,12 +18,14 @@ sealed class PhotoDetailsSideEffect {
 
 @HiltViewModel
 class PhotoDetailsViewModel @Inject constructor(
-    val photoRepository: PhotoRepository,
+    private val photoId: Long,
+    private val photoRepository: PhotoRepository,
 ) : ContainerHost<PhotoDetailsState, PhotoDetailsSideEffect>, ViewModel() {
     override val container =
         container<PhotoDetailsState, PhotoDetailsSideEffect>(PhotoDetailsState())
 
-    fun abc() {
-
+    init {
+         intent {
+         }
     }
 }

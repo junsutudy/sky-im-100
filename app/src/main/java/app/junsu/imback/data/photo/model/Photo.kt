@@ -1,7 +1,7 @@
 package app.junsu.imback.data.photo.model
 
 data class Photo(
-    val id: String,
+    val id: Long,
     val author: String,
     val width: Int,
     val height: Int,
@@ -13,7 +13,7 @@ data class Photo(
 // 만약 일반 Photo 클래스를 사용한다면 List -> Details Navigation 시 직렬화/역직렬화를 통해
 // Argument에서 Photo 정보를 불러올 수 있겠다고 생각하였습니다.
 data class PhotoDetails(
-    val id: String,
+    val id: Long,
     val author: String,
     val width: Int,
     val height: Int,
