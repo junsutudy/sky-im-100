@@ -343,7 +343,7 @@ class ImageViewerState(
         val layoutSize = layoutSize
         if (layoutSize == Size.Zero) return
 
-        val targetWidth = standardWidth * maximumScale
+        val targetWidth = standardWidth * (maximumScale / 2)
         val targetHeight = targetWidth / imageAspectRatio
         var targetOffsetX = currentOffsetXPixel * maximumScale
         var targetOffsetY = layoutSize.height / 2F - targetHeight / 2F
