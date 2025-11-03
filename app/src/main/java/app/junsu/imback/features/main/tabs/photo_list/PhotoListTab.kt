@@ -1,6 +1,7 @@
 package app.junsu.imback.features.main.tabs.photo_list
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -12,7 +13,11 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBar
@@ -67,7 +72,15 @@ fun PhotoListTab(
                             },
                             expanded = expanded,
                             onExpandedChange = { expanded = it },
-                            placeholder = { Text("Search") }
+                            placeholder = { Text("Search") },
+                            trailingIcon = {
+                                IconButton(onClick = {}) {
+                                    Icon(
+                                        imageVector = Icons.Default.Search,
+                                        contentDescription = null,
+                                    )
+                                }
+                            },
                         )
                     },
                     expanded = expanded,
@@ -94,9 +107,11 @@ fun PhotoListTab(
         LazyVerticalGrid(
             columns = GridCells.Fixed(count = 4),
             contentPadding = PaddingValues(
-                top = paddingValues.calculateTopPadding() + 16.0.dp,
-                bottom = paddingValues.calculateBottomPadding() + 16.0.dp,
+                top = paddingValues.calculateTopPadding() + 8.0.dp,
+                bottom = paddingValues.calculateBottomPadding(),
             ),
+            horizontalArrangement = Arrangement.spacedBy(space = 2.0.dp),
+            verticalArrangement = Arrangement.spacedBy(space = 2.0.dp),
         ) {
             state.value.photos.let { photos ->
                 if (photos.isNotEmpty()) {
@@ -106,9 +121,8 @@ fun PhotoListTab(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .aspectRatio(1.0f),
-                        ) {
-
-                        }
+                            onClick = {},
+                        )
                     }
                 }
             }
