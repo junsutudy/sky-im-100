@@ -1,5 +1,6 @@
 package app.junsu.imback.features.main
 
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
@@ -40,7 +41,7 @@ enum class MainDestinations(
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController = rememberNavController(),
 ) {
     var selectedTab by remember { mutableStateOf(MainDestinations.PHOTO_LIST) }
 
@@ -72,7 +73,9 @@ fun MainScreen(
         NavHost(
             navController = navController,
             startDestination = MainDestinations.PHOTO_LIST.route,
-            modifier = Modifier.padding(paddingValues),
+            modifier = Modifier
+                .padding(paddingValues)
+                .consumeWindowInsets(paddingValues),
         ) {
             composable(MainDestinations.PHOTO_LIST.route) {
                 PhotoListTab()
