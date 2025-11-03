@@ -49,7 +49,11 @@ fun ImBackApp(modifier: Modifier = Modifier) {
         modifier = modifier,
     ) {
         composable(ImBackDestinations.MAIN.route) {
-            MainScreen()
+            MainScreen(
+                onOpenPhotoDetails = { photoId ->
+                    navController.navigate(route = ImBackDestinations.PHOTO_DETAILS.route + "/$photoId")
+                }
+            )
         }
         composable(
             route = ImBackDestinations.PHOTO_DETAILS.route + "/{photoId}",

@@ -40,6 +40,7 @@ enum class MainDestinations(
 
 @Composable
 fun MainScreen(
+    onOpenPhotoDetails: (photoId: Long) -> Unit,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
 ) {
