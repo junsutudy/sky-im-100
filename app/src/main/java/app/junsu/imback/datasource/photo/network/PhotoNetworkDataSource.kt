@@ -1,12 +1,14 @@
 package app.junsu.imback.datasource.photo.network
 
 import app.junsu.imback.data.photo.PhotoRepositoryImpl.Companion.PHOTOS_FETCH_LIMIT
+import app.junsu.imback.datasource.photo.model.PhotoDetailsResponse
 import app.junsu.imback.datasource.photo.model.PhotoResponse
 import app.junsu.imback.datasource.photo.network.api_service.PhotoApiService
 import javax.inject.Inject
 
 abstract class PhotoNetworkDataSource {
     abstract suspend fun fetchPhotos(page: Int?, limit: Int?): List<PhotoResponse>
+    abstract suspend fun fetchPhotoDetails(id: Long): PhotoDetailsResponse
 }
 
 class PhotoNetworkDataSourceImpl @Inject constructor(
@@ -19,6 +21,12 @@ class PhotoNetworkDataSourceImpl @Inject constructor(
         return photoApiService.fetchPhotos(
             page = page ?: 0,
             limit = limit ?: PHOTOS_FETCH_LIMIT,
+        )
+    }
+
+    override suspend fun fetchPhotoDetails(id: Long): PhotoDetailsResponse {
+        return photoApiService.fetchPhotoDetails(
+            id = id,
         )
     }
 }

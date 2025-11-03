@@ -15,6 +15,6 @@ interface PhotoApiService {
 
     @GET("/id/{photo_id}/info")
     suspend fun fetchPhotoDetails(
-        @Path("photo_id") photoId: String,
+        @Path("photo_id") id: Long,
     ): PhotoDetailsResponse
 }

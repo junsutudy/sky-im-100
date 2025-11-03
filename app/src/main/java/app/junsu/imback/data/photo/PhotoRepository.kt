@@ -1,6 +1,7 @@
 package app.junsu.imback.data.photo
 
 import app.junsu.imback.data.photo.model.Photo
+import app.junsu.imback.data.photo.model.PhotoDetails
 import app.junsu.imback.datasource.photo.database.PhotoDatabaseDataSource
 import app.junsu.imback.datasource.photo.network.PhotoNetworkDataSource
 import javax.inject.Inject
@@ -10,6 +11,10 @@ abstract class PhotoRepository {
         page: Int?,
         limit: Int?,
     ): List<Photo>
+
+    abstract suspend fun getPhotoDetails(
+        id: Long,
+    ): PhotoDetails
 }
 
 class PhotoRepositoryImpl @Inject constructor(
@@ -32,6 +37,20 @@ class PhotoRepositoryImpl @Inject constructor(
                 height = response.height,
                 url = response.url,
                 downloadUrl = response.downloadUrl,
+            )
+        }
+    }
+
+    override suspend fun getPhotoDetails(id: Long): PhotoDetails {
+        val fetchedPhoto = photoNetworkDataSource.fetchPhotoDetails(id = id)
+        return fetchedPhoto.let {
+            PhotoDetails(
+                id = it.id,
+                author = it.author,
+                width = it.width,
+                height = it.height,
+                url = it.url,
+                downloadUrl = it.downloadUrl,
             )
         }
     }
