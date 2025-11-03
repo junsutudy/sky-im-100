@@ -244,7 +244,7 @@ private fun Float.pxToDp(density: Density): Dp {
 @Composable
 fun rememberImageViewerState(
     minimumScale: Float = 1f,
-    maximumScale: Float = 3f,
+    maximumScale: Float = 5f,
     onDragDismissRequest: (() -> Unit)? = null,
 ): ImageViewerState {
     val dismissRequest by rememberUpdatedState(onDragDismissRequest)
@@ -263,7 +263,7 @@ fun rememberImageViewerState(
 @Stable
 class ImageViewerState(
     private val minimumScale: Float = 1f,
-    private val maximumScale: Float = 3f,
+    private val maximumScale: Float = 5f,
 ) {
 
     var onDragDismissRequest: (() -> Unit)? = null
