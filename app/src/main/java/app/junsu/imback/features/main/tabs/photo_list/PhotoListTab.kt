@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.foundation.verticalScroll
@@ -18,6 +17,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBar
@@ -37,6 +37,9 @@ import androidx.compose.ui.semantics.traversalIndex
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.itemContentType
+import androidx.paging.compose.itemKey
 import app.junsu.imback.core.ui.composables.PhotoCell
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -47,18 +50,16 @@ fun PhotoListTab(
     viewModel: PhotoListViewModel = hiltViewModel(),
 ) {
     val state = viewModel.uiState.collectAsStateWithLifecycle()
+    val photoPagingItems = viewModel.pagingDataFlow.collectAsLazyPagingItems()
     val textFieldState = rememberTextFieldState()
     var expanded by rememberSaveable { mutableStateOf(false) }
     val searchResults = remember { mutableListOf<String>("ASDF", "ADSFSDF") }
-
     Scaffold(
-        modifier = modifier,
-        topBar = {
+        modifier = modifier, topBar = {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .semantics { isTraversalGroup = true }
-            ) {
+                    .semantics { isTraversalGroup = true }) {
                 SearchBar(
                     modifier = Modifier
                         .align(Alignment.Center)
@@ -97,14 +98,12 @@ fun PhotoListTab(
                                         textFieldState.edit { replace(0, length, result) }
                                         expanded = false
                                     }
-                                    .fillMaxWidth()
-                            )
+                                    .fillMaxWidth())
                         }
                     }
                 }
             }
-        }
-    ) { paddingValues ->
+        }) { paddingValues ->
         LazyVerticalGrid(
             columns = GridCells.Fixed(count = 4),
             contentPadding = PaddingValues(
@@ -114,17 +113,22 @@ fun PhotoListTab(
             horizontalArrangement = Arrangement.spacedBy(space = 2.0.dp),
             verticalArrangement = Arrangement.spacedBy(space = 2.0.dp),
         ) {
-            state.value.photos.let { photos ->
-                if (photos.isNotEmpty()) {
-                    items(photos, key = { photo -> photo.id }) { photo ->
-                        PhotoCell(
-                            photo = photo,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .aspectRatio(1.0f),
-                            onClick = { onOpenPhotoDetails.invoke(photo.id) },
-                        )
-                    }
+            items(
+                count = photoPagingItems.itemCount,
+                key = photoPagingItems.itemKey { it.id },
+                contentType = photoPagingItems.itemContentType { it },
+            ) { index ->
+                val photo = photoPagingItems[index]
+                if (photo == null) {
+                    LinearProgressIndicator()
+                } else {
+                    PhotoCell(
+                        photo = photo,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .aspectRatio(1.0f),
+                        onClick = { onOpenPhotoDetails.invoke(photo.id) },
+                    )
                 }
             }
         }
