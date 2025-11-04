@@ -22,6 +22,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.paging.compose.LazyPagingItems
+import app.junsu.imback.data.photo.model.Photo
 import coil.compose.AsyncImage
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
@@ -29,7 +31,8 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PhotoDetailsScreen(
-    photoId: Long,
+    photoPagingItems: LazyPagingItems<Photo>,
+    currentIndex: Int,
     onNavigateUp: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: PhotoDetailsViewModel = hiltViewModel(),
@@ -43,8 +46,11 @@ fun PhotoDetailsScreen(
         }
     }
 
-    LaunchedEffect(key1 = photoId) {
-        viewModel.loadPhotoDetails(photoId = photoId)
+    LaunchedEffect(key1 = currentIndex) {
+        val currentPhoto = photoPagingItems[currentIndex]
+        if (currentPhoto != null) {
+            viewModel.loadPhotoDetails(photoId = currentPhoto.id)
+        }
     }
 
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter") Scaffold(

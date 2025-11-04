@@ -17,12 +17,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.LazyPagingItems
+import app.junsu.imback.data.photo.model.Photo
 import app.junsu.imback.features.main.tabs.library.LibraryTab
 import app.junsu.imback.features.main.tabs.photo_list.PhotoListTab
 
@@ -42,10 +42,10 @@ enum class MainDestinations(
 
 @Composable
 fun MainScreen(
-    onOpenPhotoDetails: (photoId: Long) -> Unit,
+    photoPagingItems: LazyPagingItems<Photo>,
+    onOpenPhotoDetails: (currentPosition: Int) -> Unit,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    viewModel: MainViewModel = hiltViewModel(),
 ) {
     var selectedTab by remember { mutableStateOf(MainDestinations.PHOTO_LIST) }
 
@@ -83,7 +83,7 @@ fun MainScreen(
         ) {
             composable(MainDestinations.PHOTO_LIST.route) {
                 PhotoListTab(
-                    photoPagingItems = viewModel.pagingDataFlow.collectAsLazyPagingItems(),
+                    photoPagingItems = photoPagingItems,
                     onOpenPhotoDetails = onOpenPhotoDetails,
                 )
             }

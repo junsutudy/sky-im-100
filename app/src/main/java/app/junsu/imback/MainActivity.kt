@@ -10,13 +10,16 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import androidx.paging.compose.collectAsLazyPagingItems
 import app.junsu.imback.core.ui.theme.IMBACKTheme
 import app.junsu.imback.features.main.MainScreen
+import app.junsu.imback.features.main.MainViewModel
 import app.junsu.imback.features.photo_details.PhotoDetailsScreen
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -45,8 +48,12 @@ enum class ImBackDestinations(
 }
 
 @Composable
-fun ImBackApp(modifier: Modifier = Modifier) {
+fun ImBackApp(
+    modifier: Modifier = Modifier,
+    viewModel: MainViewModel = hiltViewModel(),
+) {
     val navController = rememberNavController()
+    val photoPagingItems = viewModel.pagingDataFlow.collectAsLazyPagingItems()
     NavHost(
         navController = navController,
         startDestination = ImBackDestinations.MAIN.route,
@@ -70,23 +77,25 @@ fun ImBackApp(modifier: Modifier = Modifier) {
     ) {
         composable(ImBackDestinations.MAIN.route) {
             MainScreen(
-                onOpenPhotoDetails = { photoId ->
-                    navController.navigate(route = ImBackDestinations.PHOTO_DETAILS.route + "/$photoId")
+                photoPagingItems = photoPagingItems,
+                onOpenPhotoDetails = { currentPosition ->
+                    navController.navigate(route = ImBackDestinations.PHOTO_DETAILS.route + "/$currentPosition")
                 }
             )
         }
         composable(
-            route = ImBackDestinations.PHOTO_DETAILS.route + "/{photoId}",
+            route = ImBackDestinations.PHOTO_DETAILS.route + "/{currentPosition}",
             arguments = listOf(
-                navArgument("photoId") {
+                navArgument("currentPosition") {
                     type = NavType.LongType
                     nullable = false
                 },
             )
         ) {
-            val photoId = it.arguments?.getLong("photoId")!!
+            val currentPosition = it.arguments?.getInt("currentPosition")!!
             PhotoDetailsScreen(
-                photoId = photoId,
+                photoPagingItems = photoPagingItems,
+                currentIndex = currentPosition,
                 onNavigateUp = navController::navigateUp,
             )
         }

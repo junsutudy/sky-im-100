@@ -45,7 +45,7 @@ import app.junsu.imback.data.photo.model.Photo
 @Composable
 fun PhotoListTab(
     photoPagingItems: LazyPagingItems<Photo>,
-    onOpenPhotoDetails: (photoId: Long) -> Unit,
+    onOpenPhotoDetails: (currentPosition: Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val textFieldState = rememberTextFieldState()
@@ -124,7 +124,7 @@ fun PhotoListTab(
                         modifier = Modifier
                             .fillMaxWidth()
                             .aspectRatio(1.0f),
-                        onClick = { onOpenPhotoDetails.invoke(photo.id) },
+                        onClick = { onOpenPhotoDetails.invoke(index) },
                     )
                 }
             }
