@@ -1,4 +1,4 @@
-package app.junsu.imback.features.main.tabs.photo_list
+package app.junsu.imback.features.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PhotoListViewModel @Inject constructor(
+class MainViewModel @Inject constructor(
     private val photoRepository: PhotoRepository,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(PhotoListUiState())

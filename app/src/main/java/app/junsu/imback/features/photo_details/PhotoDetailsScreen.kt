@@ -4,6 +4,8 @@ import PhotoViewer
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.Close
@@ -33,6 +35,7 @@ fun PhotoDetailsScreen(
     viewModel: PhotoDetailsViewModel = hiltViewModel(),
 ) {
     val state by viewModel.collectAsState()
+    val pagerState = rememberPagerState { 10 }
 
     viewModel.collectSideEffect {
         when (it) {
@@ -44,48 +47,43 @@ fun PhotoDetailsScreen(
         viewModel.loadPhotoDetails(photoId = photoId)
     }
 
-    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-    Scaffold(
-        modifier = modifier,
-        topBar = {
-            TopAppBar(
-                title = { Text("Photo Details") },
-                navigationIcon = {
-                    IconButton(
-                        onClick = onNavigateUp,
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Close,
-                            contentDescription = null,
-                        )
-                    }
-                },
-                actions = {
-                    IconButton(
-                        onClick = {
-                            println("BOOKMARK")
-                        },
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Bookmark,
-                            contentDescription = null,
-                        )
-                    }
+    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter") Scaffold(
+        modifier = modifier, topBar = {
+            TopAppBar(title = { Text("Photo Details") }, navigationIcon = {
+                IconButton(
+                    onClick = onNavigateUp,
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Close,
+                        contentDescription = null,
+                    )
                 }
-            )
-        }
-    ) { paddingValues ->
+            }, actions = {
+                IconButton(
+                    onClick = {
+                        println("BOOKMARK")
+                    },
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Bookmark,
+                        contentDescription = null,
+                    )
+                }
+            })
+        }) { paddingValues ->
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center,
         ) {
-            PhotoViewer {
-                AsyncImage(
-                    model = state.photoDetails?.downloadUrl,
-                    contentDescription = null,
-                    contentScale = ContentScale.FillWidth,
-                    alignment = Alignment.Center,
-                )
+            HorizontalPager(state = pagerState) { page ->
+                PhotoViewer {
+                    AsyncImage(
+                        model = state.photoDetails?.downloadUrl,
+                        contentDescription = null,
+                        contentScale = ContentScale.FillWidth,
+                        alignment = Alignment.Center,
+                    )
+                }
             }
         }
     }

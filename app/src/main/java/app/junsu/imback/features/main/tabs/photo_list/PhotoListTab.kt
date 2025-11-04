@@ -35,22 +35,19 @@ import androidx.compose.ui.semantics.isTraversalGroup
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.traversalIndex
 import androidx.compose.ui.unit.dp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemContentType
 import androidx.paging.compose.itemKey
 import app.junsu.imback.core.ui.composables.PhotoCell
+import app.junsu.imback.data.photo.model.Photo
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PhotoListTab(
+    photoPagingItems: LazyPagingItems<Photo>,
     onOpenPhotoDetails: (photoId: Long) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: PhotoListViewModel = hiltViewModel(),
 ) {
-    val state = viewModel.uiState.collectAsStateWithLifecycle()
-    val photoPagingItems = viewModel.pagingDataFlow.collectAsLazyPagingItems()
     val textFieldState = rememberTextFieldState()
     var expanded by rememberSaveable { mutableStateOf(false) }
     val searchResults = remember { mutableListOf<String>("ASDF", "ADSFSDF") }
