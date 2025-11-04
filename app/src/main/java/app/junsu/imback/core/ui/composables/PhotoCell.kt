@@ -5,9 +5,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import app.junsu.imback.BuildConfig
 import app.junsu.imback.data.photo.model.Photo
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
 
 @Composable
 fun PhotoCell(
@@ -16,7 +18,10 @@ fun PhotoCell(
     onClick: () -> Unit,
 ) {
     AsyncImage(
-        model = "${BuildConfig.BASE_URL}/id/${photo.id}/128/128",
+        model = ImageRequest.Builder(LocalContext.current)
+            .data("${BuildConfig.BASE_URL}/id/${photo.id}/128/128")
+            .crossfade(true)
+            .build(),
         contentDescription = null,
         modifier = modifier
             .clickable(
