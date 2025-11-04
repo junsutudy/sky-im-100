@@ -46,10 +46,12 @@ fun PhotoDetailsScreen(
         }
     }
 
-    LaunchedEffect(key1 = currentIndex) {
-        val currentPhoto = photoPagingItems[currentIndex]
+    LaunchedEffect(key1 = pagerState.currentPage) {
+        val currentPhoto = photoPagingItems[pagerState.currentPage]
         if (currentPhoto != null) {
-            viewModel.loadPhotoDetails(photoId = currentPhoto.id)
+            if (state.photoDetails?.id != currentPhoto.id) {
+                viewModel.loadPhotoDetails(photoId = currentPhoto.id)
+            }
         }
     }
 
@@ -77,22 +79,44 @@ fun PhotoDetailsScreen(
                 }
             })
         }) { paddingValues ->
+
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center,
         ) {
             // FIXME: NOT USING DETAILS VIEWMODEL DATA
-            HorizontalPager(state = pagerState) { page ->
+            HorizontalPager(
+                state = pagerState,
+            ) { page ->
                 val photo = photoPagingItems[page]
-                if (photo != null)
+                val photoDetails = state.photoDetails
+
+                if (photo != null) {
+                    val imageUrl =
+                        if (photoDetails?.id == photo.id) {
+                            photoDetails.downloadUrl
+                        } else {
+                            null
+                        }
+
                     PhotoViewer {
-                        AsyncImage(
-                            model = photo.downloadUrl,
-                            contentDescription = null,
-                            contentScale = ContentScale.FillWidth,
-                            alignment = Alignment.Center,
-                        )
+                        if (imageUrl != null) {
+                            AsyncImage(
+                                model = imageUrl,
+                                contentDescription = null,
+                                contentScale = ContentScale.FillWidth,
+                                alignment = Alignment.Center,
+                            )
+                        } else {
+                            AsyncImage(
+                                model = photo.downloadUrl,
+                                contentDescription = null,
+                                contentScale = ContentScale.FillWidth,
+                                alignment = Alignment.Center,
+                            )
+                        }
                     }
+                }
             }
         }
     }
