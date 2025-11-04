@@ -10,6 +10,7 @@ import app.junsu.imback.BuildConfig
 import app.junsu.imback.data.photo.model.Photo
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import kotlinx.coroutines.Dispatchers
 
 @Composable
 fun PhotoCell(
@@ -18,7 +19,8 @@ fun PhotoCell(
     onClick: () -> Unit,
 ) {
     AsyncImage(
-        model = ImageRequest.Builder(LocalContext.current)
+        model = ImageRequest.Builder(context = LocalContext.current)
+            .fetcherDispatcher(Dispatchers.IO)
             .data("${BuildConfig.BASE_URL}/id/${photo.id}/128/128")
             .crossfade(true)
             .build(),
