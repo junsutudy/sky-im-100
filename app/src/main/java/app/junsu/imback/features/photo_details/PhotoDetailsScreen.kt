@@ -2,8 +2,6 @@ package app.junsu.imback.features.photo_details
 
 import PhotoViewer
 import android.annotation.SuppressLint
-import androidx.compose.animation.Crossfade
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,6 +13,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -51,6 +50,7 @@ fun PhotoDetailsScreen(
 ) {
     val state by viewModel.collectAsState()
     val pagerState = rememberPagerState(initialPage = currentIndex) { photoPagingItems.itemCount }
+    val colorScheme = MaterialTheme.colorScheme
 
     viewModel.collectSideEffect {
         when (it) {
@@ -69,6 +69,8 @@ fun PhotoDetailsScreen(
 
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter") Scaffold(
         modifier = modifier,
+        containerColor = Color.Black,
+        contentColor = Color.White,
         topBar = {
             TopAppBar(
                 title = { Text("Photo Details") },
@@ -96,11 +98,13 @@ fun PhotoDetailsScreen(
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color.Transparent,
-                ),
+                    titleContentColor = Color.White,
+                    navigationIconContentColor = Color.White,
+                    actionIconContentColor = Color.White,
+                )
             )
         },
     ) { paddingValues ->
-
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center,
@@ -142,28 +146,22 @@ fun PhotoDetailsScreen(
                     }
 
                     PhotoViewer {
-                        Crossfade(
-                            targetState = isHighResLoaded,
-                            label = "photo_cross_fade",
-                            animationSpec = tween(300),
-                        ) { isLoaded ->
-                            if (isLoaded) {
-                                AsyncImage(
-                                    model = highResUrl,
-                                    contentDescription = null,
-                                    modifier = Modifier.fillMaxWidth(),
-                                    contentScale = ContentScale.FillWidth,
-                                    alignment = Alignment.Center,
-                                )
-                            } else {
-                                AsyncImage(
-                                    model = photo.downloadUrl,
-                                    contentDescription = null,
-                                    modifier = Modifier.fillMaxWidth(),
-                                    contentScale = ContentScale.FillWidth,
-                                    alignment = Alignment.Center,
-                                )
-                            }
+                        if (isHighResLoaded) {
+                            AsyncImage(
+                                model = highResUrl,
+                                contentDescription = null,
+                                modifier = Modifier.fillMaxWidth(),
+                                contentScale = ContentScale.FillWidth,
+                                alignment = Alignment.Center,
+                            )
+                        } else {
+                            AsyncImage(
+                                model = photo.downloadUrl,
+                                contentDescription = null,
+                                modifier = Modifier.fillMaxWidth(),
+                                contentScale = ContentScale.FillWidth,
+                                alignment = Alignment.Center,
+                            )
                         }
                     }
                 }
