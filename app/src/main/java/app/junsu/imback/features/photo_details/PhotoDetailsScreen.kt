@@ -38,6 +38,7 @@ import coil.request.ImageRequest
 import kotlinx.coroutines.Dispatchers
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
+import rememberImageViewerState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -145,7 +146,9 @@ fun PhotoDetailsScreen(
                         }
                     }
 
-                    PhotoViewer {
+                    PhotoViewer(
+                        state = rememberImageViewerState { onNavigateUp() }
+                    ) {
                         if (isHighResLoaded) {
                             AsyncImage(
                                 model = highResUrl,
