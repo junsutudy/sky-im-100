@@ -2,8 +2,12 @@ package app.junsu.imback.features.photo_details
 
 import PhotoViewer
 import android.annotation.SuppressLint
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.EaseOutCirc
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
@@ -92,28 +96,38 @@ fun PhotoDetailsScreen(
                 val photoDetails = state.photoDetails
 
                 if (photo != null) {
-                    val imageUrl =
-                        if (photoDetails?.id == photo.id) {
-                            photoDetails.downloadUrl
-                        } else {
-                            null
-                        }
+                    val imageUrl = if (photoDetails?.id == photo.id) {
+                        photoDetails.downloadUrl
+                    } else {
+                        null
+                    }
 
                     PhotoViewer {
-                        if (imageUrl != null) {
-                            AsyncImage(
-                                model = imageUrl,
-                                contentDescription = null,
-                                contentScale = ContentScale.FillWidth,
-                                alignment = Alignment.Center,
-                            )
-                        } else {
-                            AsyncImage(
-                                model = photo.downloadUrl,
-                                contentDescription = null,
-                                contentScale = ContentScale.FillWidth,
-                                alignment = Alignment.Center,
-                            )
+                        Crossfade(
+                            targetState = imageUrl,
+                            label = "viewer loading",
+                            animationSpec = tween(
+                                durationMillis = 250,
+                                easing = EaseOutCirc,
+                            ),
+                        ) { imageUrl ->
+                            if (imageUrl != null) {
+                                AsyncImage(
+                                    model = imageUrl,
+                                    contentDescription = null,
+                                    modifier = Modifier.fillMaxWidth(),
+                                    contentScale = ContentScale.FillWidth,
+                                    alignment = Alignment.Center,
+                                )
+                            } else {
+                                AsyncImage(
+                                    model = photo.downloadUrl,
+                                    contentDescription = null,
+                                    modifier = Modifier.fillMaxWidth(),
+                                    contentScale = ContentScale.FillWidth,
+                                    alignment = Alignment.Center,
+                                )
+                            }
                         }
                     }
                 }
