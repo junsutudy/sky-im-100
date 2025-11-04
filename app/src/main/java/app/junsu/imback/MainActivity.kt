@@ -84,18 +84,18 @@ fun ImBackApp(
             )
         }
         composable(
-            route = ImBackDestinations.PHOTO_DETAILS.route + "/{currentPosition}",
+            route = ImBackDestinations.PHOTO_DETAILS.route + "/{currentIndex}",
             arguments = listOf(
-                navArgument("currentPosition") {
-                    type = NavType.LongType
+                navArgument("currentIndex") {
+                    type = NavType.IntType
                     nullable = false
                 },
             )
         ) {
-            val currentPosition = it.arguments?.getInt("currentPosition")!!
+            val currentIndex = it.arguments?.getInt("currentIndex")!!
             PhotoDetailsScreen(
                 photoPagingItems = photoPagingItems,
-                currentIndex = currentPosition,
+                currentIndex = currentIndex,
                 onNavigateUp = navController::navigateUp,
             )
         }

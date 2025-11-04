@@ -38,7 +38,7 @@ fun PhotoDetailsScreen(
     viewModel: PhotoDetailsViewModel = hiltViewModel(),
 ) {
     val state by viewModel.collectAsState()
-    val pagerState = rememberPagerState { 10 }
+    val pagerState = rememberPagerState(initialPage = currentIndex) { photoPagingItems.itemCount }
 
     viewModel.collectSideEffect {
         when (it) {
@@ -81,15 +81,18 @@ fun PhotoDetailsScreen(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center,
         ) {
+            // FIXME: NOT USING DETAILS VIEWMODEL DATA
             HorizontalPager(state = pagerState) { page ->
-                PhotoViewer {
-                    AsyncImage(
-                        model = state.photoDetails?.downloadUrl,
-                        contentDescription = null,
-                        contentScale = ContentScale.FillWidth,
-                        alignment = Alignment.Center,
-                    )
-                }
+                val photo = photoPagingItems[page]
+                if (photo != null)
+                    PhotoViewer {
+                        AsyncImage(
+                            model = photo.downloadUrl,
+                            contentDescription = null,
+                            contentScale = ContentScale.FillWidth,
+                            alignment = Alignment.Center,
+                        )
+                    }
             }
         }
     }
