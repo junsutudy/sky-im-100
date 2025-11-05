@@ -105,7 +105,7 @@ fun PhotoListTab(
             columns = GridCells.Fixed(count = 4),
             contentPadding = PaddingValues(
                 top = paddingValues.calculateTopPadding() + 8.0.dp,
-                bottom = paddingValues.calculateBottomPadding(),
+//                bottom = paddingValues.calculateBottomPadding(),
             ),
             horizontalArrangement = Arrangement.spacedBy(space = 2.0.dp),
             verticalArrangement = Arrangement.spacedBy(space = 2.0.dp),
