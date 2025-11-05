@@ -1,6 +1,13 @@
 package app.junsu.imback.features.main
 
-import androidx.compose.foundation.layout.consumeWindowInsets
+import android.annotation.SuppressLint
+import androidx.compose.animation.core.EaseOutCirc
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
@@ -49,6 +56,7 @@ fun MainScreen(
 ) {
     var selectedTab by remember { mutableStateOf(MainDestinations.PHOTO_LIST) }
 
+    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     Scaffold(
         modifier = modifier,
         bottomBar = {
@@ -77,9 +85,29 @@ fun MainScreen(
         NavHost(
             navController = navController,
             startDestination = MainDestinations.PHOTO_LIST.route,
-            modifier = Modifier
-                .padding(paddingValues)
-                .consumeWindowInsets(paddingValues),
+            modifier = Modifier.padding(PaddingValues(bottom = paddingValues.calculateBottomPadding())),
+            enterTransition = {
+                fadeIn(
+                    animationSpec = tween(durationMillis = 250),
+                ) + scaleIn(
+                    animationSpec = tween(
+                        durationMillis = 250,
+                        easing = EaseOutCirc,
+                    ),
+                    initialScale = 0.99f,
+                )
+            },
+            exitTransition = {
+                fadeOut(
+                    animationSpec = tween(durationMillis = 250),
+                ) + scaleOut(
+                    animationSpec = tween(
+                        durationMillis = 250,
+                        easing = EaseOutCirc,
+                    ),
+                    targetScale = 0.99f,
+                )
+            },
         ) {
             composable(MainDestinations.PHOTO_LIST.route) {
                 PhotoListTab(
