@@ -124,6 +124,9 @@ fun MainScreen(
 
 private fun NavHostController.navigateToDestination(destination: MainDestinations) =
     this.navigate(destination.route) {
+        popUpTo(graph.startDestinationId) {
+            saveState = true
+        }
         launchSingleTop = true
         restoreState = true
     }
