@@ -150,6 +150,7 @@ fun PhotoDetailsScreen(
                         state = rememberImageViewerState { onNavigateUp() }
                     ) {
                         if (isHighResLoaded) {
+                            // FIXME: NEEDS CACHING
                             AsyncImage(
                                 model = highResUrl,
                                 contentDescription = null,

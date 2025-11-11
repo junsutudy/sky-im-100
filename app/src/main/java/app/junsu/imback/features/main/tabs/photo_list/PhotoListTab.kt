@@ -10,9 +10,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.input.clearText
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -52,7 +54,8 @@ fun PhotoListTab(
     var expanded by rememberSaveable { mutableStateOf(false) }
     val searchResults = remember { mutableListOf<String>("ASDF", "ADSFSDF") }
     Scaffold(
-        modifier = modifier, topBar = {
+        modifier = modifier,
+        topBar = {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -72,6 +75,24 @@ fun PhotoListTab(
                             expanded = expanded,
                             onExpandedChange = { expanded = it },
                             placeholder = { Text("Search") },
+                            leadingIcon = if (expanded) {
+                                {
+                                    IconButton(
+                                        onClick = {
+                                            expanded = false
+                                            textFieldState.clearText()
+                                        },
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Default.Close,
+                                            contentDescription = null,
+                                        )
+                                    }
+
+                                }
+                            } else {
+                                null
+                            },
                             trailingIcon = {
                                 IconButton(onClick = {}) {
                                     Icon(
@@ -100,7 +121,8 @@ fun PhotoListTab(
                     }
                 }
             }
-        }) { paddingValues ->
+        },
+    ) { paddingValues ->
         LazyVerticalGrid(
             columns = GridCells.Fixed(count = 4),
             contentPadding = PaddingValues(
@@ -124,7 +146,9 @@ fun PhotoListTab(
                         modifier = Modifier
                             .fillMaxWidth()
                             .aspectRatio(1.0f),
-                        onClick = { onOpenPhotoDetails.invoke(index) },
+                        onClick = {
+                            onOpenPhotoDetails.invoke(index)
+                        },
                     )
                 }
             }
